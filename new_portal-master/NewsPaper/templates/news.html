@@ -1,0 +1,45 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %}
+
+{% load words_filters %}
+{% load custom_tags %}
+
+<!-- Название у нас будет products -->
+{% block title %}
+News
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим все товары -->
+{% block content %}
+<h1>Все новости.</h1>
+<h1><em>Количество записей на сайте: {{ news|length }}</em></h1>
+<h3><em>Дата и время: {% current_time '%d-%m-%Y %H:%M:%S' %}</em></h3>
+<hr>
+        <table>
+            <tr>
+               <td><h3>Название</h3></td>
+               <td><h3>Дата публикации</h3></td>
+               <td><h3>Описание</h3></td>
+
+           </tr>
+
+ {% for post in news %}
+
+           <tr style="height: 100px;">
+               <td style="height: 100px;"><h6>{{ post.name_news | censor }}</h6></td>
+               <td style="height: 100px;"><h6>{{ post.data_time|date:'j.m.Y' }}</h6></td>
+               <td style="height: 100px;"><h6>{{ post.preview | censor | truncatechars:20}}</h6></td>
+           </tr>
+           {% endfor %}
+            <style>
+               table {
+               width: 950px;
+               margin: auto;
+               }
+               td {
+               text-align: center;
+               }
+           </style>
+
+    </table>
+{% endblock content %}
